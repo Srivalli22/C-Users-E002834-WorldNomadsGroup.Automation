@@ -416,8 +416,10 @@ namespace WorldNomadsGroup.Automation.Repository
             {
 
                 Thread.Sleep(5000);
+                WaitForVisibilityOfElement(Standard, 30);
                 JsClick(Standard, "Standard");
                 Thread.Sleep(3000);
+                WaitForVisibilityOfElement(AddYourDetails, 30);
                 JsClick(AddYourDetails, "AddYourDetails");
                 Thread.Sleep(3000);
 
@@ -429,7 +431,7 @@ namespace WorldNomadsGroup.Automation.Repository
                 SetValueToObject(LN, "LN", 60);
                 SelectByOptionText(TravellerDOB_Day, "10", "Day");
                 SelectByOptionText(TravellerDOB_Month, "Apr", "Month");
-                SelectByOptionText(TravellerDOB_Year, "1984", "Year");
+                SelectByOptionText(TravellerDOB_Year, "1989", "Year");
                 SetValueToObject(TravellerEmailAddress, "abc@def.com", 60);
                 SetValueToObject(TravellerPhoneNumber, "123456789", 60);
                 SetValueToObject(AddressLine1, "line1", 60);

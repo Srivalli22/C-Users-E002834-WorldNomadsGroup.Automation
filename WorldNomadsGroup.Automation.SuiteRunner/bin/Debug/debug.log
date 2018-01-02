@@ -509,3 +509,5 @@
 [0102/153741.355:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0102/154323.611:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
 [0102/154328.003:ERROR:crashpad_client_win.cc(130)] crash server failed to launch, self-terminating
+[0102/160839.021:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
+[0102/165828.587:ERROR:registration_protocol_win.cc(84)] TransactNamedPipe: The pipe has been ended. (0x6D)
