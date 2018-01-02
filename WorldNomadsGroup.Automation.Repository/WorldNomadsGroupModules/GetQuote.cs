@@ -102,7 +102,7 @@ namespace WorldNomadsGroup.Automation.Repository
         public static By EndDate = By.XPath("(.//input[@class='Input-field'])[2]");
         public static By Done = By.XPath(".//button[text()='Done']");
         public static By DispDate = By.XPath("(.//span[@class='Datepicker-head-month'])[1]");
-        public static By Standard = By.XPath("(//button[@class='button large arrow secondary'])[1]");
+        public static By Standard = By.XPath("//button[contains(text(),'Buy Standard')]");
         public static By Explorer = By.XPath("(.//button[@class='button large arrow primary'])[1]");
         public static By AddYourDetails = By.XPath("(//button[contains(text(),'Add your details')])[1]");
 
