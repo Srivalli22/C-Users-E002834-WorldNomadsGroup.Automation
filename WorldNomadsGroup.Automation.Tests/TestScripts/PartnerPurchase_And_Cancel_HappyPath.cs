@@ -78,6 +78,7 @@ namespace WorldNomadsGroup.Automation.Tests
                 GetQuote.EnterTravelDetailsAngular(strWhereCountry, strDuration, strAge);
                 GetQuote.SelectQuote();
                 #endregion
+                //End of the region 
 
                 //#region Select quote
                 //Step = "Select quote";
