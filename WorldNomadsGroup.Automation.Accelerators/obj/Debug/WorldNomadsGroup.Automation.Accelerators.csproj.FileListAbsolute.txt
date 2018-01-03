@@ -321,6 +321,9 @@ C:\Demo\WorldNomadsGroup.Automation.Accelerators\bin\Debug\IKVM.OpenJDK.Corba.dl
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\bin\Debug\TestStack.White.pdb
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\bin\Debug\WebDriver.pdb
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\bin\Debug\WebDriver.Support.pdb
+<<<<<<< HEAD
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\obj\Debug\WorldNomadsGroup.Automation.Accelerators.csprojResolveAssemblyReference.cache
+=======
+>>>>>>> dev
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\obj\Debug\WorldNomadsGroup.Automation.Accelerators.dll
 C:\Demo\WorldNomadsGroup.Automation.Accelerators\obj\Debug\WorldNomadsGroup.Automation.Accelerators.pdb

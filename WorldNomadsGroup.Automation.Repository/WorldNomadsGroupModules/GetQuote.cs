@@ -102,9 +102,9 @@ namespace WorldNomadsGroup.Automation.Repository
         public static By EndDate = By.XPath("(.//input[@class='Input-field'])[2]");
         public static By Done = By.XPath(".//button[text()='Done']");
         public static By DispDate = By.XPath("(.//span[@class='Datepicker-head-month'])[1]");
-        public static By Standard = By.XPath("(//button[@class='button large arrow secondary'])[1]");
+        public static By Standard = By.XPath("//button[contains(text(),'Buy Standard')]");
         public static By Explorer = By.XPath("(.//button[@class='button large arrow primary'])[1]");
-        public static By AddYourDetails = By.XPath("(//button[contains(text(),'Add your details')])[1]");
+        public static By AddYourDetails = By.XPath("//button[contains(text(),'Add your details')]");
 
         //public static By TC1 = By.XPath(".//span[@data-e2e='termsAndConditions-checkbox']//label[@for='tc0']/span[@class='Checkbox-button']");
         //public static By TC1 = By.XPath(".//label[@for='tc0']/span[@class='Checkbox-button']");
@@ -416,8 +416,10 @@ namespace WorldNomadsGroup.Automation.Repository
             {
 
                 Thread.Sleep(5000);
+                WaitForVisibilityOfElement(Standard, 30);
                 JsClick(Standard, "Standard");
                 Thread.Sleep(3000);
+                WaitForVisibilityOfElement(AddYourDetails, 30);
                 JsClick(AddYourDetails, "AddYourDetails");
                 Thread.Sleep(3000);
 
@@ -429,7 +431,7 @@ namespace WorldNomadsGroup.Automation.Repository
                 SetValueToObject(LN, "LN", 60);
                 SelectByOptionText(TravellerDOB_Day, "10", "Day");
                 SelectByOptionText(TravellerDOB_Month, "Apr", "Month");
-                SelectByOptionText(TravellerDOB_Year, "1984", "Year");
+                SelectByOptionText(TravellerDOB_Year, "1989", "Year");
                 SetValueToObject(TravellerEmailAddress, "abc@def.com", 60);
                 SetValueToObject(TravellerPhoneNumber, "123456789", 60);
                 SetValueToObject(AddressLine1, "line1", 60);

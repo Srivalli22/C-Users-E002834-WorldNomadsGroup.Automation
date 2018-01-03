@@ -16,17 +16,17 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
 {
     class Program
     {
-       
+
         public static Dictionary<string, string> QualifiedNames = new Dictionary<string, string>();
         private static List<object[]> TestCaseToExecute = new List<object[]>();
         public static bool ReportSummary = true;
         public static bool Detailedreportflag = true;
         public static string BrowserTypeValue = null;
-        
+
         public static int Main(string[] args)
         {
             try
-            {                
+            {
                 Arguments CommandLine = new Arguments(args);
 
                 Addconfig(CommandLine);
@@ -56,44 +56,44 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
                 Console.WriteLine("Execution completed at " + DateTime.Now);
 
                 // generate re-run suite
-                var suiteContent = new StringBuilder();
-                suiteContent.AppendLine("TestCaseID,Run,Browser,TestCaseTitle,RequirementFeature");
-                foreach (var eachCase in reportEngine.Reporter.TestCases)
-                {
-                    if (eachCase.IsSuccess) continue;
-                    var browsers = eachCase.Browsers.Where(eachBrowser => !eachBrowser.IsSuccess).Aggregate(string.Empty, (current, eachBrowser) => current + $"{eachBrowser.Title};");
-                    browsers = browsers.TrimEnd(new char[] { ';' });
-                    suiteContent.AppendLine(
-                        $"{eachCase.Title},Yes,{browsers},{eachCase.Name},{eachCase.RequirementFeature.Replace(',', ' ')}");
-                }
-                var fileName = Path.Combine(reportEngine.ReportPath, "FailedSuite.csv");
-                using (var output = new StreamWriter(fileName))
-                {
-                    output.Write(suiteContent.ToString());
-                }
+                //var suiteContent = new StringBuilder();
+                //suiteContent.AppendLine("TestCaseID,Run,Browser,TestCaseTitle,RequirementFeature");
+                //foreach (var eachCase in reportEngine.Reporter.TestCases)
+                //{
+                //    if (eachCase.IsSuccess) continue;
+                //    var browsers = eachCase.Browsers.Where(eachBrowser => !eachBrowser.IsSuccess).Aggregate(string.Empty, (current, eachBrowser) => current + $"{eachBrowser.Title};");
+                //    browsers = browsers.TrimEnd(new char[] { ';' });
+                //    suiteContent.AppendLine(
+                //        $"{eachCase.Title},Yes,{browsers},{eachCase.Name},{eachCase.RequirementFeature.Replace(',', ' ')}");
+                //}
+                //var fileName = Path.Combine(reportEngine.ReportPath, "FailedSuite.csv");
+                //using (var output = new StreamWriter(fileName))
+                //{
+                //    output.Write(suiteContent.ToString());
+                //}
 
                 #region RerunFailedTest
 
-                Console.WriteLine("Rerun of test is " + Util.EnvironmentSettings["RerunTest"]);
+                //Console.WriteLine("Rerun of test is " + Util.EnvironmentSettings["RerunTest"]);
 
-                if (Util.EnvironmentSettings["RerunTest"]
-                    .Equals("YES", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    ExcelReader.SaveCsvtoXlxs(fileName, Path.Combine(reportEngine.ReportPath, "FailedSuite.xlsx"));
+                //if (Util.EnvironmentSettings["RerunTest"]
+                //    .Equals("YES", StringComparison.InvariantCultureIgnoreCase))
+                //{
+                //    ExcelReader.SaveCsvtoXlxs(fileName, Path.Combine(reportEngine.ReportPath, "FailedSuite.xlsx"));
 
-                    TestCaseToExecute.Clear();
+                //    TestCaseToExecute.Clear();
 
-                    var reportRerunEngine = new Engine(reportEngine.ReportPath, Util.EnvironmentSettings["Server"],
-                        "YES");
+                //    var reportRerunEngine = new Engine(reportEngine.ReportPath, Util.EnvironmentSettings["Server"],
+                //        "YES");
 
-                    Testdriver(CommandLine, reportEngine.ReportPath + "\\", reportRerunEngine, "FailedSuite.xlsx");
+                //    Testdriver(CommandLine, reportEngine.ReportPath + "\\", reportRerunEngine, "FailedSuite.xlsx");
 
-                    Processor(int.Parse(ConfigurationManager.AppSettings.Get("MaxDegreeOfParallelism")));
+                //    Processor(int.Parse(ConfigurationManager.AppSettings.Get("MaxDegreeOfParallelism")));
 
-                    reportRerunEngine.Summarize();
-                }
+                //    reportRerunEngine.Summarize();
+                //}
 
-                reportEngine.Summary.TestCases.ForEach(testcase=> testcase.IsSuccess.Equals(true));
+                //reportEngine.Summary.TestCases.ForEach(testcase => testcase.IsSuccess.Equals(true));
 
 
                 TearDown();
@@ -105,10 +105,10 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
                 {
 
                     Console.WriteLine("Execution completed at " + DateTime.Now);
-                    Console.WriteLine("Execution completed . " + reportEngine.Summary.FailedCount+ "Test  have failed");
+                    Console.WriteLine("Execution completed . " + reportEngine.Summary.FailedCount + "Test  have failed");
                     return -1;
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -119,7 +119,7 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
             }
 
             return 0;
-            
+
         }
 
         private static void TearDown()
@@ -167,7 +167,7 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
             {
                 try
                 {
-                    
+
 
                     if (eachRow["Run"].ToString().ToUpper() != "YES")
                         continue;
@@ -193,19 +193,19 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
                             };
                         testCaseReporter.Browsers.Add(browserReporter);
                         var TempworkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\";
-                       
+
                         //foreach (DataRow iterationTestData in ExcelReader.ReadXMLFile(Path.Combine(TempworkingDirectory, "TestData\\TestData.xml"), testCaseName).Rows)
-                            foreach (DataRow iterationTestData in XMLReader.ReadXMLFile(TempworkingDirectory,"TestData\\TestData.xml",testCaseName).Rows)
-                            {
+                        foreach (DataRow iterationTestData in XMLReader.ReadXMLFile(TempworkingDirectory, "TestData\\TestData.xml", testCaseName).Rows)
+                        {
                             var testData = iterationTestData.Table.Columns.Cast<DataColumn>().ToDictionary(col => col.ColumnName, col => Convert.ToString((iterationTestData.Field<string>(col.ColumnName))));
-                       
+
                             var browserConfig = Util.GetBrowserConfig(browserId != string.Empty ? browserId : overRideBrowserId);
                             var iterationId = iterationTestData["TestCaseID"].ToString();
                             //String defectID = iterationTestData["DefectID"].ToString();
                             var iterationReporter = new Iteration(iterationId);
                             iterationReporter.Browser = browserReporter;
                             browserReporter.Iterations.Add(iterationReporter);
-                            Console.WriteLine("Browser name :{0},Testcase id:{1},iteration id:{2},iteration report id:{3},test data :{4}, report engine :{5}",browserConfig, testCaseId, iterationId, iterationReporter, testData, reportEngine);
+                            Console.WriteLine("Browser name :{0},Testcase id:{1},iteration id:{2},iteration report id:{3},test data :{4}, report engine :{5}", browserConfig, testCaseId, iterationId, iterationReporter, testData, reportEngine);
                             TestCaseToExecute.Add(new object[] { browserConfig, testCaseId, iterationId, iterationReporter, testData, reportEngine });
                         }
                     }
@@ -251,14 +251,14 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
         {
             try
             {
-                
+
                 if (ConfigurationManager.AppSettings.Get("ExecutionMode").ToLower().Equals("s"))
                 {
                     //Use this loop for sequential running of the test cases
                     foreach (var work in TestCaseToExecute)
                     {
                         ProcessEachWork(work);
-                        
+
                     }
                 }
                 else if (ConfigurationManager.AppSettings.Get("ExecutionMode").ToLower().Equals("p"))
@@ -301,7 +301,7 @@ namespace WorldNomadsGroup.Automation.SuiteRunner
         }
 
 
-        
+
 
     }
 }
